@@ -13,7 +13,7 @@ var completed = document.getElementById('completed');
 for (var i = todo_text.length - 1; i >= 0; i--) {
 	todo_text[i].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
 		e.currentTarget.style.textDecoration = "none";
-
+		todo_wrap.appendChild(e.currentTarget.parentNode);
 	}else{
 		e.currentTarget.style.textDecoration = "line-through";
 		completed.appendChild(e.currentTarget.parentNode);
@@ -25,6 +25,8 @@ function updateEventTodo() {
 	{
 		todo_text[todo_text.length-(document.querySelectorAll("#completed .todo").length+1)].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
 			e.currentTarget.style.textDecoration = "none";
+			todo_wrap.appendChild(e.currentTarget.parentNode);
+			console.log("hey");
 		}else{
 			e.currentTarget.style.textDecoration = "line-through";
 			completed.appendChild(e.currentTarget.parentNode);
@@ -33,6 +35,8 @@ function updateEventTodo() {
 	{
 		todo_text[todo_text.length-1].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
 			e.currentTarget.style.textDecoration = "none";
+			todo_wrap.appendChild(e.currentTarget.parentNode);
+			console.log("hey");
 		}else{
 			e.currentTarget.style.textDecoration = "line-through";
 			completed.appendChild(e.currentTarget.parentNode);
