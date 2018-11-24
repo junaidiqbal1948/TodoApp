@@ -1,0 +1,13 @@
+* {
+	/*border: 1px solid black;*/
+}
+
+.icon {
+	margin-left: 50px;
+}
+
+.todo_text, .icon {
+	font-size: 1.1em;
+	cursor: pointer;
+}
+
