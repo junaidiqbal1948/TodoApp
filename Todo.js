@@ -1,14 +1,15 @@
-// Event added to closing icon
+// Event added to closing icon(@)
 var icon = document.getElementsByClassName("icon");
-// input
+// input element
 var input = document.getElementById("input");
 // parent todo-wrap element
 var todo_wrap = document.getElementById("todo_wrap");
-// todos
+// todos spans inside todo-wrap
 var todo_text = document.getElementsByClassName("todo_text");
-// Completed
+// div completed
 var completed = document.getElementById('completed');
 
+// initial for loop to add event listeners to span elements of todos
 for (var i = todo_text.length - 1; i >= 0; i--) {
 	todo_text[i].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
 		e.currentTarget.style.textDecoration = "none";
@@ -20,26 +21,25 @@ for (var i = todo_text.length - 1; i >= 0; i--) {
 }
 
 function updateEventTodo() {
-	for (var i = 0; i < 1; i++) {
+	// for (var i = 0; i < 1; i++) {
 	todo_text[todo_text.length-1].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
 		e.currentTarget.style.textDecoration = "none";
 	}else{
 		e.currentTarget.style.textDecoration = "line-through";
 		completed.appendChild(e.currentTarget.parentNode);
 	}})
-}
+// }
 }
 
-
+// initial for loop to add event listeners to icon elements of todos
 for (var i = icon.length - 1; i >= 0; i--) {
-	// icon[i].addEventListener("click", function(){ alert("Hello World!"); });
 	 icon[i].addEventListener("click", function(e){e.currentTarget.parentNode.remove();})
 }
 
 function updateEvent() {
-	for (var i = 0; i < 1; i++) {
+	// for (var i = 0; i < 1; i++) {
 	icon[icon.length-1].addEventListener("click", function(e){e.currentTarget.parentNode.remove();})
-    }
+    // }
 }
 
 
@@ -70,6 +70,8 @@ adder[0].addEventListener("click", function(){
 	elm.appendChild(iconi);
 
 	todo_wrap.appendChild(elm);
+
+	icon = document.getElementsByClassName("icon");
 	updateEvent();
 
 	todo_text = document.getElementsByClassName("todo_text");
@@ -78,8 +80,3 @@ adder[0].addEventListener("click", function(){
 	input.value = "";
 
 });
-
-// <div class="todo">
-// 				<span class="todo-text">Carry Chochs</span>
-// 				<i class="icon">@</i>
-// 			</div>
