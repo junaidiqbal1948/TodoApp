@@ -11,37 +11,38 @@ var completed = document.getElementById('completed');
 
 // initial for loop to add event listeners to span elements of todos
 for (var i = todo_text.length - 1; i >= 0; i--) {
-	todo_text[i].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
-		e.currentTarget.style.textDecoration = "none";
-		todo_wrap.appendChild(e.currentTarget.parentNode);
-	}else{
-		e.currentTarget.style.textDecoration = "line-through";
-		completed.appendChild(e.currentTarget.parentNode);
-	}})
+			todo_text[i].addEventListener("click", function(e){
+			if (e.currentTarget.style.textDecoration === "line-through") {
+				e.currentTarget.style.textDecoration = "none";
+				todo_wrap.appendChild(e.currentTarget.parentNode);
+			}else{
+				e.currentTarget.style.textDecoration = "line-through";
+				completed.appendChild(e.currentTarget.parentNode);
+			}})
 }
 
 function updateEventTodo() {
-	if (document.querySelectorAll("#completed .todo").length>0)
-	{
-		todo_text[todo_text.length-(document.querySelectorAll("#completed .todo").length+1)].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
-			e.currentTarget.style.textDecoration = "none";
-			todo_wrap.appendChild(e.currentTarget.parentNode);
-			console.log("hey");
-		}else{
-			e.currentTarget.style.textDecoration = "line-through";
-			completed.appendChild(e.currentTarget.parentNode);
-		}console.log(todo_text)})
-	} else
-	{
-		todo_text[todo_text.length-1].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
-			e.currentTarget.style.textDecoration = "none";
-			todo_wrap.appendChild(e.currentTarget.parentNode);
-			console.log("hey");
-		}else{
-			e.currentTarget.style.textDecoration = "line-through";
-			completed.appendChild(e.currentTarget.parentNode);
-		}console.log(todo_text)})
-	}
+			if (document.querySelectorAll("#completed .todo").length>0)
+			{
+				todo_text[todo_text.length-(document.querySelectorAll("#completed .todo").length+1)].addEventListener("click", function(e){
+					if (e.currentTarget.style.textDecoration === "line-through") {
+						e.currentTarget.style.textDecoration = "none";
+						todo_wrap.appendChild(e.currentTarget.parentNode);
+						console.log("hey");
+					}else{
+						e.currentTarget.style.textDecoration = "line-through";
+						completed.appendChild(e.currentTarget.parentNode);
+					} console.log(todo_text)})
+			} else {
+					todo_text[todo_text.length-1].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
+					e.currentTarget.style.textDecoration = "none";
+					todo_wrap.appendChild(e.currentTarget.parentNode);
+					console.log("hey");
+			} else {
+				e.currentTarget.style.textDecoration = "line-through";
+				completed.appendChild(e.currentTarget.parentNode);
+			}console.log(todo_text)})
+		}
 }
 
 // initial for loop to add event listeners to icon elements of todos
@@ -96,3 +97,46 @@ adder[0].addEventListener("click", function(){
 	input.value = "";
 	console.log(todo_text)
 });
+
+
+
+
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// input
+var inputEdit = document.getElementById("edit");
+var glb; //temporary for editing
+
+function runHere(sibling, e) {
+	e.currentTarget.previousElementSibling.innerHTML = inputEdit.value;
+}
+
+// When the user clicks on the button, open the modal
+btn.onclick = function(e) {
+    modal.style.display = "block";
+		var sibling = e.currentTarget.previousElementSibling;
+		console.log(sibling);
+		runHere(sibling, e);
+		glb = e;
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+		glb.currentTarget.previousElementSibling.innerHTML = inputEdit.value;
+    modal.style.display = "none";
+}
+
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
