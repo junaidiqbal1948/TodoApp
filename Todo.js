@@ -6,12 +6,16 @@ var input = document.getElementById("input");
 var todo_wrap = document.getElementById("todo_wrap");
 // todos
 var todo_text = document.getElementsByClassName("todo_text");
+// Completed
+var completed = document.getElementById('completed');
 
 for (var i = todo_text.length - 1; i >= 0; i--) {
 	todo_text[i].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
 		e.currentTarget.style.textDecoration = "none";
+
 	}else{
 		e.currentTarget.style.textDecoration = "line-through";
+		completed.appendChild(e.currentTarget.parentNode);
 	}})
 }
 
@@ -21,6 +25,7 @@ function updateEventTodo() {
 		e.currentTarget.style.textDecoration = "none";
 	}else{
 		e.currentTarget.style.textDecoration = "line-through";
+		completed.appendChild(e.currentTarget.parentNode);
 	}})
 }
 }
