@@ -21,14 +21,23 @@ for (var i = todo_text.length - 1; i >= 0; i--) {
 }
 
 function updateEventTodo() {
-	// for (var i = 0; i < 1; i++) {
-	todo_text[todo_text.length-1].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
-		e.currentTarget.style.textDecoration = "none";
-	}else{
-		e.currentTarget.style.textDecoration = "line-through";
-		completed.appendChild(e.currentTarget.parentNode);
-	}})
-// }
+	if (document.querySelectorAll("#completed .todo").length>0)
+	{
+		todo_text[todo_text.length-(document.querySelectorAll("#completed .todo").length+1)].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
+			e.currentTarget.style.textDecoration = "none";
+		}else{
+			e.currentTarget.style.textDecoration = "line-through";
+			completed.appendChild(e.currentTarget.parentNode);
+		}console.log(todo_text)})
+	} else
+	{
+		todo_text[todo_text.length-1].addEventListener("click", function(e){if (e.currentTarget.style.textDecoration === "line-through") {
+			e.currentTarget.style.textDecoration = "none";
+		}else{
+			e.currentTarget.style.textDecoration = "line-through";
+			completed.appendChild(e.currentTarget.parentNode);
+		}console.log(todo_text)})
+	}
 }
 
 // initial for loop to add event listeners to icon elements of todos
@@ -37,9 +46,12 @@ for (var i = icon.length - 1; i >= 0; i--) {
 }
 
 function updateEvent() {
-	// for (var i = 0; i < 1; i++) {
-	icon[icon.length-1].addEventListener("click", function(e){e.currentTarget.parentNode.remove();})
-    // }
+	if (document.querySelectorAll("#completed .todo").length>0) {
+		icon[todo_text.length-(document.querySelectorAll("#completed .todo").length+1)].addEventListener("click", function(e){e.currentTarget.parentNode.remove();})
+	} else {
+		icon[icon.length-1].addEventListener("click", function(e){e.currentTarget.parentNode.remove();})
+	}
+
 }
 
 
@@ -78,5 +90,5 @@ adder[0].addEventListener("click", function(){
 	updateEventTodo();
 
 	input.value = "";
-
+	console.log(todo_text)
 });
