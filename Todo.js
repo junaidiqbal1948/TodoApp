@@ -51,10 +51,9 @@ function createElm(b) {
 	span.appendChild(t);
 
 	let iconi = document.createElement("I");
+	iconi.classList.add("fas");
+	iconi.classList.add("fa-times");
 	iconi.classList.add("icon");
-	t = document.createTextNode("@");
-	// Create a text node
-	iconi.appendChild(t);
 
 	elm.appendChild(span);
 	elm.appendChild(iconi);
@@ -62,11 +61,25 @@ function createElm(b) {
 	todo_wrap.appendChild(elm);
 }
 
+// runs when Enter key pressed
+input.addEventListener("keydown", function(e){
+	if (e.keyCode === 13) {
+		let b = input.value;
 
-// add todo
-var adder = document.getElementsByClassName("add-icon");
+		createElm(b);
 
-adder[0].addEventListener("click", function(){
+		icon = document.getElementsByClassName("icon");
+		updateEventIcon();
+
+		todo_text = document.getElementsByClassName("todo_text");
+		updateEventTodo();
+
+		input.value = "";
+	}
+});
+
+// for Mobile
+document.getElementsByClassName("add-icon")[0].addEventListener("click", function() {
 	let b = input.value;
 
 	createElm(b);
