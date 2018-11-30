@@ -10,7 +10,8 @@ var todo_text = document.getElementsByClassName("todo_text");
 var completed = document.getElementById('completed');
 // temporary len variable
 var tempLen;
-
+// todos array for localstorage
+var todos = [];  // empty array
 
 function updateEventTodo() {
 	if (document.querySelectorAll("#completed .todo").length>0) {
