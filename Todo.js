@@ -12,6 +12,7 @@ var completed = document.getElementById('completed');
 var tempLen;
 // todos array for localstorage
 var todos = [];  // empty array
+window.localstorage.setItem('todos', JSON.stringify(todos));
 
 function updateEventTodo() {
 	if (document.querySelectorAll("#completed .todo").length>0) {
@@ -42,6 +43,8 @@ function updateEventIcon() {
 }
 
 function createElm(b) {
+	todos.push(b);
+
 	let elm = document.createElement("DIV");
 	elm.classList.add("todo");
 
