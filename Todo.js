@@ -10,9 +10,59 @@ var todo_text = document.getElementsByClassName("todo_text");
 var completed = document.getElementById('completed');
 // temporary len variable
 var tempLen;
+
 // todos array for localstorage
-var todos = [];  // empty array
-window.localstorage.setItem('todos', JSON.stringify(todos));
+// var todos = [];   empty todo array
+// var todosComp = [];   empty completed array
+
+if (window.localStorage.getItem("todos") !== null) {
+	var todos = JSON.parse(window.localStorage.getItem("todos"));
+	// var todosComp = JSON.parse(window.localStorage.getItem("todosComp"));
+
+	console.log(todos);
+
+	for (var i = 0; i < todos.length; i++) {
+		createElmStart(todos[i]);
+
+		icon = document.getElementsByClassName("icon");
+		updateEventIcon();
+
+		todo_text = document.getElementsByClassName("todo_text");
+		updateEventTodo();
+	}
+
+} else {
+	var todos = [];
+	// var todosComp = [];
+}
+
+if (window.localStorage.getItem("todosComp") !== null) {
+	// var todos = JSON.parse(window.localStorage.getItem("todos"));
+	var todosComp = JSON.parse(window.localStorage.getItem("todosComp"));
+
+	console.log(todosComp);
+
+	for (var i = 0; i < todosComp.length; i++) {
+		createElmStartComp(todosComp[i]);
+
+		icon = document.getElementsByClassName("icon");
+		updateEventIcon();
+
+		todo_text = document.getElementsByClassName("todo_text");
+		updateEventTodo();
+	}
+
+} else {
+	// var todos = [];
+	var todosComp = [];
+}
+
+
+
+
+// window.localstorage.setItem('todos', JSON.stringify(todos));
+// window.localStorage.setItem('todos', JSON.stringify(todos));
+// window.localstorage.setItem('todosComp', JSON.stringify(todosComp));
 
 function updateEventTodo() {
 	if (document.querySelectorAll("#completed .todo").length>0) {
@@ -24,9 +74,53 @@ function updateEventTodo() {
 		if (e.currentTarget.style.textDecoration === "line-through") {
 			e.currentTarget.style.textDecoration = "none";
 			todo_wrap.appendChild(e.currentTarget.parentNode);
+
+			todos.unshift(e.currentTarget.innerHTML);
+			// remove item from todosComp
+			for (var i = 0; i < todosComp.length; i++) {
+				if (e.currentTarget.innerHTML === todosComp[i]) {
+					todosComp.splice(i, /*deleteCount*/ 1);
+					break;
+				}
+			}
+
+			// update storage browser
+			window.localStorage.setItem('todosComp', JSON.stringify(todosComp));
+			window.localStorage.setItem('todos', JSON.stringify(todos));
+
 		} else {
 			e.currentTarget.style.textDecoration = "line-through";
 			completed.appendChild(e.currentTarget.parentNode);
+
+			console.log(e.currentTarget.innerHTML);
+
+			let elmCheck = false;
+			for (var i = 0; i < todosComp.length; i++) {
+				if (e.currentTarget.innerHTML === todosComp[i]) {
+					elmCheck = true;
+					break;
+				}
+			}
+
+			if (elmCheck === false) {
+				todosComp.unshift(e.currentTarget.innerHTML);
+
+				// NOTE: remove item from todos
+				for (var i = 0; i < todos.length; i++) {
+					if (todos[i] === e.currentTarget.innerHTML) {
+						todos.splice(i,/*deleteCount*/ 1);
+
+					}
+				}
+
+			}
+
+			window.localStorage.setItem('todosComp', JSON.stringify(todosComp));
+			window.localStorage.setItem('todos', JSON.stringify(todos));
+
+
+			// NOTE: When app loads completed todos should be in complete and others left are in todos
+
 		}
 	});
 }
@@ -39,18 +133,88 @@ function updateEventIcon() {
 		// todo not completed any of yet
 		tempLen = icon.length-1;
 	}
-	icon[tempLen].addEventListener("click", function(e){e.currentTarget.parentNode.remove();})
+	icon[tempLen].addEventListener("click", function(e){
+		e.currentTarget.parentNode.remove();
+
+
+		let remove = e.currentTarget.previousSibling.innerHTML;
+		let start;
+
+		for (var i = 0; i < todos.length; i++) {
+			if (todos[i] === remove) {
+				start = i;
+			}
+		}
+
+		todos.splice(start,/*deleteCount*/ 1);
+		window.localStorage.setItem('todos', JSON.stringify(todos));
+	})
 }
 
-function createElm(b) {
-	todos.push(b);
+function createElmStart(b) {
+	// todos = JSON.parse(window.localstorage.getItem('todos'));
+	// todos.push(b);
+	// window.localStorage.setItem('todos', JSON.stringify(todos));
 
 	let elm = document.createElement("DIV");
 	elm.classList.add("todo");
 
 	let span = document.createElement("SPAN");
 	span.classList.add("todo_text");
-	let t = document.createTextNode(b);
+	let t = document.createTextNode(b); // last todo in array
+	// Create a text node
+	span.appendChild(t);
+
+	let iconi = document.createElement("I");
+	iconi.classList.add("fas");
+	iconi.classList.add("fa-times");
+	iconi.classList.add("icon");
+
+	elm.appendChild(span);
+	elm.appendChild(iconi);
+
+	todo_wrap.appendChild(elm);
+}
+
+function createElmStartComp(b) {
+	// todos = JSON.parse(window.localstorage.getItem('todos'));
+	// todos.push(b);
+	// window.localStorage.setItem('todos', JSON.stringify(todos));
+
+	let elm = document.createElement("DIV");
+	elm.classList.add("todo");
+
+	let span = document.createElement("SPAN");
+	span.classList.add("todo_text");
+	let t = document.createTextNode(b); // last todo in array
+	// Create a text node
+	span.appendChild(t);
+	console.log(span.style.textDecoration);
+	span.style.textDecoration === "line-through";
+
+	let iconi = document.createElement("I");
+	iconi.classList.add("fas");
+	iconi.classList.add("fa-times");
+	iconi.classList.add("icon");
+
+	elm.appendChild(span);
+	elm.appendChild(iconi);
+
+	completed.appendChild(elm);
+}
+
+
+function createElm(b) {
+	// todos = JSON.parse(window.localstorage.getItem('todos'));
+	todos.push(b);
+	window.localStorage.setItem('todos', JSON.stringify(todos));
+
+	let elm = document.createElement("DIV");
+	elm.classList.add("todo");
+
+	let span = document.createElement("SPAN");
+	span.classList.add("todo_text");
+	let t = document.createTextNode(todos[todos.length-1]); // last todo in array
 	// Create a text node
 	span.appendChild(t);
 
