@@ -6,6 +6,8 @@ var input = document.getElementById("input");
 var todo_wrap = document.getElementById("todo_wrap");
 // todos spans inside todo-wrap
 var todo_text = document.getElementsByClassName("todo_text");
+// todos spans inside todo-complete
+var todosComp_text = document.getElementsByClassName("todosComp_text");
 // completed div
 var completed = document.getElementById('completed');
 // temporary len variable
@@ -16,10 +18,8 @@ var tempLen;
 if (window.localStorage.getItem("todos") !== null) {
 	var todos = JSON.parse(window.localStorage.getItem("todos"));
 
-	console.log(todos);
-
-	for (var i = 0; i < todos.length; i++) {
-		createElmStart(todos[i]);
+	for (var i = todos.length-1; i >= 0; i--) {
+		createElm(todos[i], true);
 
 		icon = document.getElementsByClassName("icon");
 		updateEventIcon();
@@ -122,15 +122,17 @@ function updateEventTodoStart() {
 
 
 function updateEventTodo() {
-	if (document.querySelectorAll("#completed .todo").length>0) {
-		tempLen = todo_text.length-(document.querySelectorAll("#completed .todo").length+1);
-	} else {
-		tempLen = todo_text.length-1;
-	}
-	todo_text[tempLen].addEventListener("click", function(e) {
+	// if (document.querySelectorAll("#completed .todo").length>0) {
+	// 	tempLen = todo_text.length-(document.querySelectorAll("#completed .todo").length+1);
+	// } else {
+	// 	tempLen = todo_text.length-1;
+	// }
+	todo_text[0].addEventListener("click", function(e) {
 		if (e.currentTarget.style.textDecoration === "line-through") {
 			e.currentTarget.style.textDecoration = "none";
-			todo_wrap.appendChild(e.currentTarget.parentNode);
+			// todo_wrap.appendChild(e.currentTarget.parentNode);
+
+			todo_wrap.insertBefore(e.currentTarget.parentNode, todo_wrap.firstChild);
 
 			todos.unshift(e.currentTarget.innerHTML);
 			// remove item from todosComp
@@ -147,8 +149,7 @@ function updateEventTodo() {
 
 		} else {
 			e.currentTarget.style.textDecoration = "line-through";
-			completed.appendChild(e.currentTarget.parentNode);
-
+			completed.insertBefore(e.currentTarget.parentNode, completed.firstChild);
 			console.log(e.currentTarget.innerHTML);
 
 			let elmCheck = false;
@@ -184,17 +185,17 @@ function updateEventTodo() {
 }
 
 function updateEventIcon() {
-	if (document.querySelectorAll("#completed .todo").length>0) {
-		// some todo completed
-		tempLen = todo_text.length-(document.querySelectorAll("#completed .todo").length+1);
-	} else {
-		// todo not completed any of yet
-		tempLen = icon.length-1;
-	}
+	// if (document.querySelectorAll("#completed .todo").length>0) {
+	// 	// some todo completed
+	// 	tempLen = todo_text.length-(document.querySelectorAll("#completed .todo").length+1);
+	// } else {
+	// 	// todo not completed any of yet
+	// 	tempLen = icon.length-1;
+	// }
 	console.log(tempLen);
 	console.log(icon);
 
-	icon[tempLen].addEventListener("click", function(e){
+	icon[0].addEventListener("click", function(e){
 		e.currentTarget.parentNode.remove();
 
 
@@ -226,6 +227,8 @@ function updateEventIconStart() {
 	if (document.querySelectorAll("#completed .todo").length>0) {
 		// some todo completed
 		tempLen = document.querySelectorAll("#completed .todo").length-1;
+		console.log(document.querySelectorAll("#completed .todo").length);
+		// tempLen = 0;
 	} else {
 		// todo not completed any of yet
 		tempLen = 0;
@@ -267,8 +270,8 @@ function createElmStart(b) {
 
 	let span = document.createElement("SPAN");
 	span.classList.add("todo_text");
-	let t = document.createTextNode(b); // last todo in array
 	// Create a text node
+	let t = document.createTextNode(b); // todo in array
 	span.appendChild(t);
 
 	let iconi = document.createElement("I");
@@ -306,17 +309,23 @@ function createElmStartComp(b) {
 }
 
 
-function createElm(b) {
+function createElm(b, check) { // if program is called from start of program then check is true
 
-	todos.push(b);
-	window.localStorage.setItem('todos', JSON.stringify(todos));
+	if (check === false) {
+		todos.unshift(b);
+		window.localStorage.setItem('todos', JSON.stringify(todos));
+	}
 
 	let elm = document.createElement("DIV");
 	elm.classList.add("todo");
 
 	let span = document.createElement("SPAN");
 	span.classList.add("todo_text");
-	let t = document.createTextNode(todos[todos.length-1]); // last todo in array
+	if (check === false) {
+		let t = document.createTextNode(todos[0]); // first todo in array
+	} else {
+		let t = document.createTextNode(b); // first todo in array
+	}
 	// Create a text node
 	span.appendChild(t);
 
@@ -328,15 +337,16 @@ function createElm(b) {
 	elm.appendChild(span);
 	elm.appendChild(iconi);
 
-	todo_wrap.appendChild(elm);
+	todo_wrap.insertBefore(elm, todo_wrap.firstChild);
 }
 
 // runs when Enter key pressed
 input.addEventListener("keydown", function(e){
 	if (e.keyCode === 13) {
+
 		let b = input.value;
 
-		createElm(b);
+		createElm(b, false); // called within running state so False
 
 		icon = document.getElementsByClassName("icon");
 		updateEventIcon();
@@ -352,7 +362,7 @@ input.addEventListener("keydown", function(e){
 document.getElementsByClassName("add-icon")[0].addEventListener("click", function() {
 	let b = input.value;
 
-	createElm(b);
+	createElm(b, false);
 
 	icon = document.getElementsByClassName("icon");
 	updateEventIcon();
