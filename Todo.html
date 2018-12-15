@@ -3,42 +3,42 @@
 <head>
 	<title>Todo</title>
 	<link rel="stylesheet" type="text/css" href="Todo.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
 	<div class="wrapper">
-		<div class="header">
-			<h1>Todo</h1>
-			<div class="add-icon"><h1>+</h1></div> <!-- h1 is dummy -->
-		</div>
 
-		<div class="add">
-			<input id="input" type="text" name="add">
-		</div>
+		<div class="inner-wrap">
 
-		<div id="todo_wrap">
-			<div class="todo">
-				<span class="todo_text">1 Go Shopping</span>
-				<i class="icon">@</i>
+			<div class="header">
+				<span>Todo</span>
+				<!-- <div class="add-icon"><span>+</span></div> <! h1 is dummy -->
+				<i class="fas fa-plus-circle add-icon"></i>
 			</div>
 
-			<div class="todo">
-				<span class="todo_text">2 Do Exercise</span>
-				<i class="icon">@</i>
+			<div class="add">
+				<input id="input" type="text" name="add" autofocus placeholder="Add Todos">
 			</div>
 
-			<div class="todo">
-				<span class="todo_text">3 Sleep Early</span>
-				<i class="icon">@</i>
+			<div id="todo_wrap">
+				<!-- todos main box -->
+				<!-- <div class="todo"><span class="todo_text">Tood Texst</span><i class="icon">@</i></div> -->
 			</div>
 
-		</div>
 
-		<div id="completed">
-			<h3>Completed</h3>
+			<div id="completedOut">
+				<span>Completed</span>
+				<!-- todos after completion -->
+				<div id="completed">
+
+				</div>
+			</div>
+
 		</div>
 
 	</div>
 
 	<script type="text/javascript" src="Todo.js"></script>
+	<!-- <script type="text/javascript" src="TodoN.js"></script> -->
 </body>
 </html>
