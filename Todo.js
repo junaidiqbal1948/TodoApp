@@ -12,6 +12,8 @@ var todosComp_text = document.getElementsByClassName("todosComp_text");
 var completed = document.getElementById('completed');
 // temporary len variable
 var tempLen;
+// Viewport size
+var viewport = window.innerWidth;
 
 // if todos is present in localStorage or not logic
 
@@ -36,8 +38,6 @@ if (window.localStorage.getItem("todos") !== null) {
 
 if (window.localStorage.getItem("todosComp") !== null) {
 	var todosComp = JSON.parse(window.localStorage.getItem("todosComp"));
-
-	console.log(todosComp);
 
 	for (let i = todosComp.length-1; i >= 0; i--) {
 		createElm(todosComp[i], true, "todosComp");
@@ -140,7 +140,6 @@ function updateEventTodo(check, str) {
 			} else {
 				e.currentTarget.style.textDecoration = "line-through";
 				completed.insertBefore(e.currentTarget.parentNode, completed.firstChild);
-				console.log(e.currentTarget.innerHTML);
 
 				let elmCheck = false;
 				for (var i = 0; i < todosComp.length; i++) {
@@ -271,8 +270,11 @@ function createElm(b, check, str) { // if program is called from start of progra
 		span.style.textDecoration = "line-through";
 	}
 
+	span.style.maxWidth = String(viewport-90).concat("px"); // max width set to viewport
+
 	elm.appendChild(span);
 	elm.appendChild(iconi);
+
 
 	if (str === "todosComp") {
 		completed.insertBefore(elm, completed.firstChild);
@@ -285,9 +287,37 @@ function createElm(b, check, str) { // if program is called from start of progra
 input.addEventListener("keydown", function(e){
 	if (e.keyCode === 13) {
 
-		let b = input.value;
+		let b;
 
-		createElm(b, false, "todos"); // called within running state so False
+		if (input.value === "") {
+			input.focus();
+		} else {
+			b = input.value;
+
+			createElm(b, false, "todos");
+
+			icon = document.getElementsByClassName("icon");
+			updateEventIcon(false, "todos");
+
+			todo_text = document.getElementsByClassName("todo_text");
+			updateEventTodo(false, "todos");
+
+			input.value = "";
+			input.focus();
+		}
+	}
+});
+
+// for Mobile
+document.getElementsByClassName("add-icon")[0].addEventListener("click", function() {
+	let b;
+
+	if (input.value === "") {
+		input.focus();
+	} else {
+		b = input.value;
+
+		createElm(b, false, "todos");
 
 		icon = document.getElementsByClassName("icon");
 		updateEventIcon(false, "todos");
@@ -296,21 +326,8 @@ input.addEventListener("keydown", function(e){
 		updateEventTodo(false, "todos");
 
 		input.value = "";
+		input.focus();
 	}
-});
 
-// for Mobile
-document.getElementsByClassName("add-icon")[0].addEventListener("click", function() {
-	let b = input.value;
 
-	createElm(b, false, "todos");
-
-	icon = document.getElementsByClassName("icon");
-	updateEventIcon(false, "todos");
-
-	todo_text = document.getElementsByClassName("todo_text");
-	updateEventTodo(false, "todos");
-
-	input.value = "";
-	input.focus();
 });

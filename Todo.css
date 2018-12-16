@@ -1,10 +1,13 @@
 * {
-	/* border: 1px solid black; */
 	box-sizing: border-box;
 }
 
 body {
 	overflow: hidden;
+	padding: 1px;
+	margin: 0;
+	background: #B9E3C6;
+
 }
 
 .wrapper {
@@ -20,7 +23,7 @@ body {
 }
 
 .header {
-	border: 1px solid black;
+	border: 5px solid #F6FEDB;;
 	width: 100%;
 	display: flex;
 	border-top-left-radius: 85px;
@@ -29,25 +32,35 @@ body {
 	border-bottom-left-radius: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	transition: all ease 1s;
 }
 
 .header span {
+	color: #F6FEDB;
 	font-size: 2.3em;
-	font-weight: 700;
 }
 
 .header > span {
 	padding-left: 30px;
+	font-family: 'Josefin Slab', serif;
 }
 
 .add-icon {
-	padding-left: 30px;
 	font-size: 2em;
 	margin: auto 0;
 	cursor: pointer;
-	/* color: rgb(66, 66, 66); */
+	color: #F6FEDB;
 	margin-left: auto;
 	margin-right: 0.5em;
+	transition: all ease 1s;
+}
+
+.add-icon:hover {
+	transform: rotate(180deg);
+}
+
+.header:hover {
+	padding-left: 30px;
 }
 
 .add input {
@@ -59,19 +72,35 @@ body {
 	border-top-right-radius: 85px;
 	border-bottom-left-radius: 85px;
 	font-size: 2em;
-	text-indent: 30px;
+
+	color: #F6FEDB;
+  opacity: 0.9;
+	font-family: 'Josefin Slab', serif;
+
+	background: transparent;  /* fallback for old browsers */
+	background: -webkit-transparent;  /* fallback for old browsers */
+
 	outline: 0;
-	border: 1px solid black;
+	border: 5px solid #F6FEDB;
+	border-top: 0px;
+	padding-right: 30px;
+	padding-left: 30px;
+}
+
+.add input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #F6FEDB;
+  opacity: 0.7; /* Firefox */
 }
 
 #todo_wrap {
 	min-height: 40%;
 	max-height: 40%;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .todo {
-	border: 1px solid black;
+	border: 2px solid #68917F;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-top-left-radius: 85px;
@@ -79,16 +108,29 @@ body {
 	border-top-right-radius: 35px;
 	border-bottom-left-radius: 10px;
 	display: flex;
+	background: #F6FEDB;
+	transition: all ease 0.7s;
+}
+
+.todo:hover {
+	padding: 0 30px;
 }
 
 .icon {
 	margin-left: auto;
 	margin-right: 0.5em;
+	transition: all ease 0.7s;
+}
+
+.icon:hover {
+	transform: rotate(180deg);
 }
 
 .todo_text, .icon {
 	font-size: 2em;
 	cursor: pointer;
+	color: #7EB09B;
+	font-family: 'Amatic SC', cursive;
 }
 
 .icon {
@@ -97,12 +139,15 @@ body {
 }
 
 .todo_text {
+	font-weight: 600;
 	padding-left: 30px;
+	padding-right: 30px;
+	overflow-x: hidden;
 }
 
 #completedOut {
 	width: 100%;
-	border: 1px solid black;
+	border: 5px solid #F6FEDB;
 	border-top-right-radius: 85px;
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
@@ -110,6 +155,7 @@ body {
 	min-height: 40%;
   max-height: 40%;
   overflow: auto;
+
 }
 
 #completedOut span {
@@ -117,6 +163,35 @@ body {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	font-size: 2.3em;
-	font-weight: 500;
+	font-weight: 600;
 	padding-left: 30px;
+}
+
+#completedOut > span {
+	color: #F6FEDB;
+	font-family: 'Josefin Slab', serif;
+	transition: all ease 0.7s;
+}
+
+#completedOut > span:hover {
+	letter-spacing: 4px;
+}
+
+
+/* media query */
+
+@media only screen and (max-width: 450px) {
+	.inner-wrap {
+		height: 88%;
+	}
+
+	#todo_wrap {
+		min-height: 45%;
+		max-height: 45%;
+	}
+
+	#completedOut {
+		min-height: 45%;
+		max-height: 45%;
+	}
 }
